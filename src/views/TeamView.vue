@@ -2,8 +2,9 @@
 import { computed, ref } from 'vue';
 import StaffForm from '../components/forms/StaffForm.vue';
 import { auth } from '../stores/auth';
-import { db, getJoinCode, saveSettings, setJoinCode } from '../stores/data';
-import { attempt, openModal } from '../stores/ui';
+import { db, getJoinCode, savePlayer, saveSettings, setJoinCode } from '../stores/data';
+import { lookupEspn } from '../lib/espn';
+import { attempt, openModal, toast } from '../stores/ui';
 import { TIERS } from '../lib/types';
 
 const staff = computed(() => [...db.staff].sort((a, b) => a.sort - b.sort));
@@ -15,6 +16,25 @@ function setCadence(tier: string, v: string) {
   if (!n || n < 1 || !db.settings) return;
   attempt(() => saveSettings({ cadence: { ...db.settings!.cadence, [tier]: n } }), 'Cadence updated');
 }
+const syncing = ref(false);
+async function syncEspn() {
+  syncing.value = true;
+  const missed: string[] = [];
+  let updated = 0;
+  await attempt(async () => {
+    for (const p of db.players) {
+      const hit = await lookupEspn(p.name);
+      if (!hit) { missed.push(p.name); continue; }
+      if (hit.espn_id !== p.espn_id || hit.position !== p.position || hit.jersey !== p.jersey) {
+        await savePlayer({ id: p.id, ...hit });
+        updated++;
+      }
+    }
+  }, undefined);
+  syncing.value = false;
+  toast(`${updated} player${updated === 1 ? '' : 's'} updated from ESPN${missed.length ? ` · not on the roster: ${missed.join(', ')}` : ''}`);
+}
+
 async function reveal() {
   await attempt(async () => { joinCode.value = await getJoinCode(); });
 }
@@ -67,6 +87,14 @@ async function change() {
         </tr>
       </tbody>
     </table></div></div>
+
+    <div class="card pad" style="margin-top: 14px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap">
+      <div style="flex: 1; min-width: 240px">
+        <div class="eyebrow" style="margin-bottom: 4px">HEADSHOTS &amp; NUMBERS</div>
+        <p class="small muted" style="margin: 0">Pulled from ESPN's 49ers roster. Re-sync after a jersey change or roster move.</p>
+      </div>
+      <button class="btn" :disabled="syncing" @click="syncEspn">{{ syncing ? 'Syncing…' : 'Sync from ESPN' }}</button>
+    </div>
 
     <div v-if="auth.member?.is_admin" class="card pad" style="margin-top: 14px">
       <div class="fl eyebrow" style="margin-bottom: 8px">JOIN CODE</div>

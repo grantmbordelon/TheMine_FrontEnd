@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import MeetingCard from '../components/MeetingCard.vue';
+import PlayerAvatar from '../components/PlayerAvatar.vue';
 import GoalForm from '../components/forms/GoalForm.vue';
 import MeetingForm from '../components/forms/MeetingForm.vue';
 import PlayerForm from '../components/forms/PlayerForm.vue';
@@ -8,7 +9,7 @@ import TalkingPointsForm from '../components/forms/TalkingPointsForm.vue';
 import { freshKey, isFresh } from '../stores/data';
 import { openModal } from '../stores/ui';
 import {
-  cadenceFor, contactState, goalCls, goalPill, goalsFor, lastContact, meetingsFor, player, statusCls, tierCls,
+  cadenceFor, contactState, goalCls, goalPill, goalsFor, lastContact, meetingsFor, player, positionLabel, statusCls, tierCls,
 } from '../lib/derive';
 import { fmtDate, fmtShort } from '../lib/format';
 
@@ -25,12 +26,13 @@ const goals = computed(() => goalsFor(props.id));
 
     <div class="card" style="overflow: hidden; margin-bottom: 22px">
       <div class="pd-head">
+        <PlayerAvatar :player="p" :size="78" eager />
         <div>
           <h2>{{ p.name }}</h2>
           <div class="meta">
             <span class="pill" :class="tierCls(p.tier)">{{ p.tier }}</span>
             <span class="pill" :class="statusCls(p.status)">{{ p.status }}</span>
-            <span class="xsmall" style="color: #b5af9f">{{ p.player_group }} · target contact every {{ cadenceFor(p) }} days</span>
+            <span class="xsmall" style="color: #b5af9f"><template v-if="positionLabel(p)">{{ positionLabel(p) }} · </template>{{ p.player_group }} · target contact every {{ cadenceFor(p) }} days</span>
           </div>
         </div>
         <div class="acts noprint">

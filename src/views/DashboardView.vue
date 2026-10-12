@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
+import PlayerAvatar from '../components/PlayerAvatar.vue';
 import StatTile from '../components/StatTile.vue';
 import MeetingForm from '../components/forms/MeetingForm.vue';
-import SettingsForm from '../components/forms/SettingsForm.vue';
 import { db, isFresh, saveNote } from '../stores/data';
 import { attempt, openModal } from '../stores/ui';
 import {
@@ -52,10 +52,13 @@ function close(noteId: string) {
   <div class="sec">
     <div class="sec-h"><h2>Summary</h2></div>
     <div class="card pad">
-      <p style="margin: 0">{{ db.settings?.summary }}</p>
+      <ul v-if="db.settings?.summary_bullets?.length" style="margin: 0; padding-left: 18px">
+        <li v-for="(b, i) in db.settings.summary_bullets" :key="i" style="margin-bottom: 4px">{{ b }}</li>
+      </ul>
+      <p v-else style="margin: 0">{{ db.settings?.summary }}</p>
       <p style="margin: 12px 0 0" class="small muted">
         {{ db.players.length }} players tracked · {{ completedCount() }} conversations logged · {{ aw.length }} awaiting a first check-in.
-        <button class="linkbtn" @click="openModal(SettingsForm)">Edit summary</button>
+        <RouterLink to="/present" class="linkbtn">Edit on Present</RouterLink>
       </p>
     </div>
   </div>
@@ -67,6 +70,7 @@ function close(noteId: string) {
         <div v-if="!recent.length" class="empty">No conversations logged yet.</div>
         <div v-for="m in recent" :key="m.id" class="feed-i" :class="{ fresh: isFresh(m.id) }" @click="open(m.player_id)">
           <div class="feed-d">{{ fmtShort(m.meeting_date) }}</div>
+          <PlayerAvatar :player="player(m.player_id)" :size="36" />
           <div class="feed-b">
             <div class="t">
               {{ player(m.player_id)?.name }}
@@ -88,7 +92,7 @@ function close(noteId: string) {
       <tbody>
         <tr v-if="!attention.length"><td colspan="6" class="empty">Everyone is inside their contact target. Good.</td></tr>
         <tr v-for="x in attention" :key="x.p.id" class="clk" @click="open(x.p.id)">
-          <td class="pname">{{ x.p.name }}</td>
+          <td class="pname"><div class="pcell"><PlayerAvatar :player="x.p" :size="28" />{{ x.p.name }}</div></td>
           <td><span class="pill" :class="tierCls(x.p.tier)">{{ x.p.tier }}</span></td>
           <td class="small muted">every {{ cadenceFor(x.p) }} days</td>
           <td><span class="pill" :class="x.s.cls">{{ x.s.label }}</span></td>
@@ -107,7 +111,7 @@ function close(noteId: string) {
         <tr v-if="!steps.length"><td colspan="6" class="empty">Nothing outstanding.</td></tr>
         <tr v-for="{ note, meeting } in steps" :key="note.id" :class="{ fresh: isFresh(note.id) }">
           <td><input type="checkbox" title="Mark done" @change="close(note.id)" /></td>
-          <td class="pname"><a href="#" @click.prevent="open(meeting.player_id)">{{ player(meeting.player_id)?.name }}</a></td>
+          <td class="pname"><div class="pcell"><PlayerAvatar :player="player(meeting.player_id)" :size="26" /><a href="#" @click.prevent="open(meeting.player_id)">{{ player(meeting.player_id)?.name }}</a></div></td>
           <td class="small wrapy">{{ note.next_steps }}</td>
           <td class="small muted"><template v-if="note.next_owner">{{ note.next_owner }}</template><span v-else class="dash">—</span></td>
           <td class="small">
@@ -124,8 +128,8 @@ function close(noteId: string) {
     <div class="sec-h"><h2>Awaiting First Check-In</h2><div class="hint">{{ aw.length }} player{{ aw.length === 1 ? '' : 's' }}</div></div>
     <div class="card pad">
       <div style="display: flex; flex-wrap: wrap; gap: 8px">
-        <button v-for="p in aw" :key="p.id" class="btn" style="padding: 6px 12px; font-size: 12.5px" @click="openModal(MeetingForm, { playerId: p.id })">
-          {{ p.name }} <span class="muted" style="font-weight: 400">+ log</span>
+        <button v-for="p in aw" :key="p.id" class="btn pcell" style="padding: 5px 12px 5px 6px; font-size: 12.5px; gap: 7px" @click="openModal(MeetingForm, { playerId: p.id })">
+          <PlayerAvatar :player="p" :size="24" />{{ p.name }} <span class="muted" style="font-weight: 400">+ log</span>
         </button>
       </div>
     </div>

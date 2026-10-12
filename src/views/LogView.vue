@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, reactive } from 'vue';
 import MeetingCard from '../components/MeetingCard.vue';
+import PlayerAvatar from '../components/PlayerAvatar.vue';
 import MeetingForm from '../components/forms/MeetingForm.vue';
 import { db, freshKey } from '../stores/data';
 import { openModal } from '../stores/ui';
@@ -32,7 +33,8 @@ const rows = computed(() => {
   </div>
   <div v-if="!rows.length" class="card empty">No conversations match.</div>
   <template v-for="m in rows" :key="freshKey(m.id)">
-    <div style="margin-bottom: 4px">
+    <div class="pcell" style="margin-bottom: 6px; gap: 8px">
+      <PlayerAvatar :player="player(m.player_id)" :size="26" />
       <RouterLink :to="{ name: 'player', params: { id: m.player_id } }" class="pname" style="color: var(--ink); font-size: 13px">{{ player(m.player_id)?.name }}</RouterLink>
       <span class="pill" :class="tierCls(player(m.player_id)?.tier || '')" style="margin-left: 6px">{{ player(m.player_id)?.tier }}</span>
     </div>

@@ -20,6 +20,12 @@ npm run dev
   highlight and a NEW tag for about 90 seconds.
 - `src/lib/derive.ts` computes all the dashboard figures from the rows (last contact,
   awaiting first check-in, overdue by tier cadence, open next steps). Nothing summary-like is stored.
+- Headshots, positions and numbers come from ESPN's public 49ers roster (`src/lib/espn.ts`).
+  New players match on save; Program Team → "Sync from ESPN" refreshes everyone.
+- Present is an editable report that prints to PDF: summary bullets plus one card per
+  player (goals, Recent, Up next). Recent and Up next are curated text pre-filled from
+  meeting notes (`src/lib/report.ts`); "Update with new meetings" refreshes only cards
+  whose player has newer notes.
 - Meetings carry one set of notes per author. Logging a meeting for a player who already
   has one within a day offers "Add my notes to that one" instead of creating a duplicate.
 - Access: sign up with email and password, pick your name, and enter the team join code.

@@ -30,6 +30,9 @@ export function notesFor(meetingId: string): Note[] {
 
 export const goalsFor = (playerId: string) => db.goals.filter(g => g.player_id === playerId);
 
+/** "WR #7" */
+export const positionLabel = (p: Player) => [p.position, p.jersey && `#${p.jersey}`].filter(Boolean).join(' ');
+
 export function lastContact(playerId: string): string | null {
   return meetingsFor(playerId, true)[0]?.meeting_date ?? null;
 }

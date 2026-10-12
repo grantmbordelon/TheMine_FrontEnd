@@ -29,6 +29,7 @@ export interface Settings {
   quote: string;
   quote_attrib: string;
   cadence: Record<string, number>;
+  summary_bullets: string[];
   updated_at: string;
 }
 
@@ -52,6 +53,15 @@ export interface Player {
   talking_points: string;
   owner: string;
   sort: number;
+  espn_id: string | null;
+  position: string;
+  jersey: string;
+  headshot_url: string; // manual override; empty = ESPN headshot from espn_id
+  report_recent: string;
+  report_upcoming: string;
+  report_as_of: string | null; // newest meeting date pulled into the report card
+  report_synced_at: string | null;
+  report_hidden: boolean;
   created_at: string;
   updated_at: string;
 }

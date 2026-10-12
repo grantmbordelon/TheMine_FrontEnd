@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import PlayerAvatar from '../components/PlayerAvatar.vue';
 import PlayerForm from '../components/forms/PlayerForm.vue';
 import { db, isFresh } from '../stores/data';
 import { openModal } from '../stores/ui';
-import { contactState, goalsFor, meetingsFor, needsAttention, playerOrder, statusCls, tierCls } from '../lib/derive';
+import { contactState, goalsFor, meetingsFor, needsAttention, playerOrder, positionLabel, statusCls, tierCls } from '../lib/derive';
 import { pad2 } from '../lib/format';
 import { GROUPS, TIERS, type Player } from '../lib/types';
 
@@ -74,7 +75,12 @@ const goalsLabel = (id: string) => {
       <tr v-if="!rows.length"><td colspan="9" class="empty">No players match those filters.</td></tr>
       <tr v-for="p in rows" :key="p.id" class="clk" :class="{ fresh: isFresh(p.id) }" @click="router.push({ name: 'player', params: { id: p.id } })">
         <td class="num">{{ pad2(playerOrder(p)) }}</td>
-        <td class="pname">{{ p.name }}<div v-if="p.notes" class="xsmall muted clamp" style="font-weight: 400">{{ p.notes }}</div></td>
+        <td class="pname">
+          <div class="pcell">
+            <PlayerAvatar :player="p" :size="34" />
+            <div>{{ p.name }}<span class="pos">{{ positionLabel(p) }}</span><div v-if="p.notes" class="xsmall muted clamp" style="font-weight: 400">{{ p.notes }}</div></div>
+          </div>
+        </td>
         <td class="xsmall muted">{{ p.player_group }}</td>
         <td><span class="pill" :class="tierCls(p.tier)">{{ p.tier }}</span></td>
         <td><span class="pill" :class="statusCls(p.status)">{{ p.status }}</span></td>
