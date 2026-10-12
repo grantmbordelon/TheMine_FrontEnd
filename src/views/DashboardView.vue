@@ -70,7 +70,7 @@ function close(noteId: string) {
         <div v-if="!recent.length" class="empty">No conversations logged yet.</div>
         <div v-for="m in recent" :key="m.id" class="feed-i" :class="{ fresh: isFresh(m.id) }" @click="open(m.player_id)">
           <div class="feed-d">{{ fmtShort(m.meeting_date) }}</div>
-          <PlayerAvatar :player="player(m.player_id)" :size="36" />
+          <PlayerAvatar :player="player(m.player_id)" :size="44" />
           <div class="feed-b">
             <div class="t">
               {{ player(m.player_id)?.name }}
@@ -92,7 +92,7 @@ function close(noteId: string) {
       <tbody>
         <tr v-if="!attention.length"><td colspan="6" class="empty">Everyone is inside their contact target. Good.</td></tr>
         <tr v-for="x in attention" :key="x.p.id" class="clk" @click="open(x.p.id)">
-          <td class="pname"><div class="pcell"><PlayerAvatar :player="x.p" :size="28" />{{ x.p.name }}</div></td>
+          <td class="pname"><div class="pcell"><PlayerAvatar :player="x.p" :size="34" />{{ x.p.name }}</div></td>
           <td><span class="pill" :class="tierCls(x.p.tier)">{{ x.p.tier }}</span></td>
           <td class="small muted">every {{ cadenceFor(x.p) }} days</td>
           <td><span class="pill" :class="x.s.cls">{{ x.s.label }}</span></td>
@@ -111,7 +111,7 @@ function close(noteId: string) {
         <tr v-if="!steps.length"><td colspan="6" class="empty">Nothing outstanding.</td></tr>
         <tr v-for="{ note, meeting } in steps" :key="note.id" :class="{ fresh: isFresh(note.id) }">
           <td><input type="checkbox" title="Mark done" @change="close(note.id)" /></td>
-          <td class="pname"><div class="pcell"><PlayerAvatar :player="player(meeting.player_id)" :size="26" /><a href="#" @click.prevent="open(meeting.player_id)">{{ player(meeting.player_id)?.name }}</a></div></td>
+          <td class="pname"><div class="pcell"><PlayerAvatar :player="player(meeting.player_id)" :size="32" /><a href="#" @click.prevent="open(meeting.player_id)">{{ player(meeting.player_id)?.name }}</a></div></td>
           <td class="small wrapy">{{ note.next_steps }}</td>
           <td class="small muted"><template v-if="note.next_owner">{{ note.next_owner }}</template><span v-else class="dash">—</span></td>
           <td class="small">
@@ -129,7 +129,7 @@ function close(noteId: string) {
     <div class="card pad">
       <div style="display: flex; flex-wrap: wrap; gap: 8px">
         <button v-for="p in aw" :key="p.id" class="btn pcell" style="padding: 5px 12px 5px 6px; font-size: 12.5px; gap: 7px" @click="openModal(MeetingForm, { playerId: p.id })">
-          <PlayerAvatar :player="p" :size="24" />{{ p.name }} <span class="muted" style="font-weight: 400">+ log</span>
+          <PlayerAvatar :player="p" :size="28" />{{ p.name }} <span class="muted" style="font-weight: 400">+ log</span>
         </button>
       </div>
     </div>

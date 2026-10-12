@@ -29,7 +29,7 @@ const tone = (s: string) => (s === 'Achieved' ? 'dark' : s === 'At risk' ? 'aler
       <thead><tr><th>PLAYER</th><th>GOAL</th><th>TARGET</th><th>STATUS</th><th>PROGRESS</th><th>UPDATED</th><th></th></tr></thead>
       <tbody>
         <tr v-for="g in goals" :key="g.id" :class="{ fresh: isFresh(g.id) }">
-          <td class="pname"><div class="pcell"><PlayerAvatar :player="player(g.player_id)" :size="26" /><RouterLink :to="{ name: 'player', params: { id: g.player_id } }">{{ player(g.player_id)?.name }}</RouterLink></div></td>
+          <td class="pname"><div class="pcell"><PlayerAvatar :player="player(g.player_id)" :size="32" /><RouterLink :to="{ name: 'player', params: { id: g.player_id } }">{{ player(g.player_id)?.name }}</RouterLink></div></td>
           <td class="small" style="font-weight: 700">{{ g.title }}</td>
           <td class="small"><template v-if="g.target">{{ g.target }}</template><span v-else class="dash">—</span></td>
           <td><span class="pill" :class="goalPill(g.status)">{{ g.status }}</span></td>

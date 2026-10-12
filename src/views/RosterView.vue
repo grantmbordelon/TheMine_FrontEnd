@@ -77,7 +77,7 @@ const goalsLabel = (id: string) => {
         <td class="num">{{ pad2(playerOrder(p)) }}</td>
         <td class="pname">
           <div class="pcell">
-            <PlayerAvatar :player="p" :size="34" />
+            <PlayerAvatar :player="p" :size="42" />
             <div>{{ p.name }}<span class="pos">{{ positionLabel(p) }}</span><div v-if="p.notes" class="xsmall muted clamp" style="font-weight: 400">{{ p.notes }}</div></div>
           </div>
         </td>

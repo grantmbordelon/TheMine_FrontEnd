@@ -40,7 +40,7 @@ const dot = (s: string) => ({ Achieved: 'g-done', 'On track': 'g-ok', 'At risk':
 
 <template>
   <article class="pc" :class="{ fresh: isFresh(p.id) }">
-    <PlayerAvatar :player="p" :size="58" eager />
+    <PlayerAvatar :player="p" :size="70" eager />
     <div class="pc-main">
       <header class="pc-h">
         <span class="pc-name">{{ p.name }}</span>
@@ -55,7 +55,7 @@ const dot = (s: string) => ({ Achieved: 'g-done', 'On track': 'g-ok', 'At risk':
               <span class="t">{{ g.title }}</span> <span class="s">{{ g.status }}</span>
             </li>
           </ul>
-          <div v-else class="it-view empty" @click="openModal(GoalForm, { playerId: p.id })">No goals set</div>
+          <div v-else class="it-view is-empty" @click="openModal(GoalForm, { playerId: p.id })"><span class="ph">No goals set</span></div>
         </section>
         <section>
           <h4>RECENT <span v-if="p.report_as_of" class="asof">· {{ fmtShort(p.report_as_of) }}</span></h4>

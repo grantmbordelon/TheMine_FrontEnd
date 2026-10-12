@@ -273,7 +273,7 @@ tbody tr.clk:hover{background:var(--warm)}
 .it{position:relative}
 .it-view{white-space:pre-wrap;cursor:text;border-radius:3px;margin:-2px -4px;padding:2px 4px;outline:none;transition:background .12s}
 .it-view:hover,.it-view:focus-visible{background:var(--gold-bg);box-shadow:0 0 0 1px var(--gold-bg2)}
-.it-view.empty{color:var(--faint);font-style:italic}
+.it-view.is-empty{color:var(--faint);font-style:italic}
 .it textarea{display:block;width:calc(100% + 8px);margin:-3px -4px;padding:2px 4px;border:1px solid var(--gold);border-radius:3px;background:#fff;font:inherit;line-height:inherit;color:inherit;resize:none;overflow:hidden;outline:none;box-shadow:0 0 0 3px var(--gold-bg2)}
 .it-meter{font-size:9.5px;color:var(--faint);margin-top:4px;text-align:right}
 .it-meter.over{color:var(--gold-dk);font-weight:700}
@@ -299,7 +299,7 @@ tbody tr.clk:hover{background:var(--warm)}
 .rpt-grp{margin-top:14px!important;break-after:avoid}
 .rpt-hidden{margin-top:16px;padding:9px 12px;background:var(--warm);border-radius:5px;font-size:11.5px;display:flex;gap:6px 14px;flex-wrap:wrap}
 
-.pc{display:grid;grid-template-columns:58px 1fr;gap:11px;border:1px solid var(--line);border-left:3px solid var(--ink);border-radius:5px;padding:8px 11px 8px 9px;margin-bottom:7px;break-inside:avoid;page-break-inside:avoid;background:#fff}
+.pc{display:grid;grid-template-columns:70px 1fr;gap:11px;border:1px solid var(--line);border-left:3px solid var(--ink);border-radius:5px;padding:8px 11px 8px 9px;margin-bottom:7px;break-inside:avoid;page-break-inside:avoid;background:#fff}
 .pc .av{border:2px solid var(--warm2)}
 .pc-main{min-width:0}
 .pc-h{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:5px}
@@ -336,9 +336,9 @@ tbody tr.clk:hover{background:var(--warm)}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .rpt{box-shadow:none;border:none;padding:0;max-width:none;margin:0}
   .pc-acts,.rpt-add,.rpt-x,.pc-add,.rpt-hidden{display:none!important}
-  .rpt-sum .it-view.empty{display:none}
-  .pc .it-view.empty{font-size:0;font-style:normal}
-  .pc .it-view.empty::after{content:'—';font-size:10.5px;color:#bbb}
+  .rpt-sum .it-view.is-empty{display:none}
+  .pc .it-view.is-empty .ph{display:none}
+  .pc .it-view.is-empty::after{content:'—';color:#bbb;font-style:normal}
   .it-view{margin:0;padding:0}
   .pc.fresh{animation:none}
   .pc-goals li:hover,.it-view:hover{background:none;box-shadow:none}

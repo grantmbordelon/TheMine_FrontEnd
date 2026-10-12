@@ -66,6 +66,6 @@ onMounted(() => { if (props.startEditing) start(); });
         {{ draft.length }} / ~{{ target }}{{ draft.length > target ? ' · long for a compact card' : '' }}
       </div>
     </template>
-    <div v-else class="it-view" :class="{ empty: !shown }" tabindex="0" @click="start" @keydown.enter.prevent="start">{{ shown || placeholder }}</div>
+    <div v-else class="it-view" :class="{ 'is-empty': !shown }" tabindex="0" @click="start" @keydown.enter.prevent="start"><template v-if="shown">{{ shown }}</template><span v-else class="ph">{{ placeholder }}</span></div>
   </div>
 </template>

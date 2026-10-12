@@ -26,7 +26,7 @@ const goals = computed(() => goalsFor(props.id));
 
     <div class="card" style="overflow: hidden; margin-bottom: 22px">
       <div class="pd-head">
-        <PlayerAvatar :player="p" :size="78" eager />
+        <PlayerAvatar :player="p" :size="96" eager />
         <div>
           <h2>{{ p.name }}</h2>
           <div class="meta">
