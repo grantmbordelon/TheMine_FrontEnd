@@ -274,8 +274,13 @@ tbody tr.clk:hover{background:var(--warm)}
 .it-view{white-space:pre-wrap;cursor:text;border-radius:3px;margin:-2px -4px;padding:2px 4px;outline:none;transition:background .12s}
 .it-view:hover,.it-view:focus-visible{background:var(--gold-bg);box-shadow:0 0 0 1px var(--gold-bg2)}
 .it-view.is-empty{color:var(--faint);font-style:italic}
-.it textarea{display:block;width:calc(100% + 8px);margin:-3px -4px;padding:2px 4px;border:1px solid var(--gold);border-radius:3px;background:#fff;font:inherit;line-height:inherit;color:inherit;resize:none;overflow:hidden;outline:none;box-shadow:0 0 0 3px var(--gold-bg2)}
-.it-meter{font-size:9.5px;color:var(--faint);margin-top:4px;text-align:right}
+.it-ed{display:block;width:calc(100% + 8px);min-height:1.45em;margin:-3px -4px;padding:2px 4px;border:1px solid var(--gold);border-radius:3px;background:#fff;white-space:pre-wrap;outline:none;box-shadow:0 0 0 3px var(--gold-bg2);cursor:text}
+.it-ed b,.it-ed strong,.rich strong{font-weight:700}
+.it-bar{display:flex;align-items:center;gap:4px;margin-top:5px;font-size:9.5px;color:var(--faint);flex-wrap:wrap}
+.it-bar button{width:22px;height:20px;border:1px solid var(--line);border-radius:3px;background:#fff;cursor:pointer;font-size:11.5px;line-height:1;padding:0;color:var(--ink)}
+.it-bar button:hover{background:var(--gold-bg);border-color:var(--gold)}
+.it-keys{margin-left:4px}
+.it-meter{margin-left:auto}
 .it-meter.over{color:var(--gold-dk);font-weight:700}
 
 /* ---------- the report (screen looks like the page) ---------- */
@@ -288,6 +293,8 @@ tbody tr.clk:hover{background:var(--warm)}
 .rpt h2{font-size:8.5px;letter-spacing:.2em;font-weight:700;color:var(--gold-dk);margin:0 0 7px;display:flex;align-items:center;gap:8px;font-family:var(--sans)}
 .rpt h2::after{content:'';flex:1;height:1px;background:var(--line)}
 .rpt h2 span{color:var(--faint);letter-spacing:.05em}
+.rpt-core{font-family:var(--serif);font-size:16.5px;line-height:1.4;color:var(--ink);border-left:3px solid var(--red);padding:3px 0 3px 13px;margin:0 0 16px;break-inside:avoid}
+.rpt-core .it-view.is-empty{font-family:var(--sans);font-size:13px}
 .rpt-sum{margin-bottom:16px;break-inside:avoid}
 .rpt-sum ul{margin:0;padding-left:17px}
 .rpt-sum li{margin:0 0 4px;font-size:12px;line-height:1.45;position:relative;padding-right:18px}
@@ -299,8 +306,16 @@ tbody tr.clk:hover{background:var(--warm)}
 .rpt-grp{margin-top:14px!important;break-after:avoid}
 .rpt-hidden{margin-top:16px;padding:9px 12px;background:var(--warm);border-radius:5px;font-size:11.5px;display:flex;gap:6px 14px;flex-wrap:wrap}
 
-.pc{display:grid;grid-template-columns:70px 1fr;gap:11px;border:1px solid var(--line);border-left:3px solid var(--ink);border-radius:5px;padding:8px 11px 8px 9px;margin-bottom:7px;break-inside:avoid;page-break-inside:avoid;background:#fff}
+.pc{position:relative;display:grid;grid-template-columns:70px 1fr;gap:11px;border:1px solid var(--line);border-left:3px solid var(--ink);border-radius:5px;padding:8px 11px 8px 9px;margin-bottom:7px;break-inside:avoid;page-break-inside:avoid;background:#fff}
 .pc .av{border:2px solid var(--warm2)}
+.pc-grip{position:absolute;left:-27px;top:50%;transform:translateY(-50%);width:20px;height:34px;border:none;background:none;color:var(--faint);cursor:grab;font-size:16px;line-height:1;opacity:0;padding:0;border-radius:4px;touch-action:none}
+.pc:hover .pc-grip,.pc-grip:focus-visible{opacity:1}
+.pc-grip:hover{color:var(--ink);background:var(--warm2)}
+.pc-grip:active{cursor:grabbing}
+.pc-ghost{opacity:.35;background:var(--gold-bg)}
+.pc-chosen{box-shadow:0 8px 24px rgba(0,0,0,.15)}
+.sortable-fallback,.pc.sortable-drag{opacity:.9}
+@media (hover:none){.pc-grip{opacity:1}}
 .pc-main{min-width:0}
 .pc-h{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:5px}
 .pc-name{font-weight:700;font-size:13.5px}
@@ -337,6 +352,7 @@ tbody tr.clk:hover{background:var(--warm)}
   .rpt{box-shadow:none;border:none;padding:0;max-width:none;margin:0}
   .pc-acts,.rpt-add,.rpt-x,.pc-add,.rpt-hidden{display:none!important}
   .rpt-sum .it-view.is-empty{display:none}
+  .rpt-core.none,.pc-grip{display:none!important}
   .pc .it-view.is-empty .ph{display:none}
   .pc .it-view.is-empty::after{content:'—';color:#bbb;font-style:normal}
   .it-view{margin:0;padding:0}

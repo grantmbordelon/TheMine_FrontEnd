@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import PlayerAvatar from '../components/PlayerAvatar.vue';
+import RichText from '../components/RichText.vue';
 import StatTile from '../components/StatTile.vue';
 import MeetingForm from '../components/forms/MeetingForm.vue';
 import { db, isFresh, saveNote } from '../stores/data';
@@ -52,8 +53,10 @@ function close(noteId: string) {
   <div class="sec">
     <div class="sec-h"><h2>Summary</h2></div>
     <div class="card pad">
+      <RichText v-if="db.settings?.core_message" :text="db.settings.core_message" tag="p"
+        style="margin: 0 0 10px; font-family: var(--serif); font-size: 16px; line-height: 1.4; border-left: 3px solid var(--red); padding-left: 12px" />
       <ul v-if="db.settings?.summary_bullets?.length" style="margin: 0; padding-left: 18px">
-        <li v-for="(b, i) in db.settings.summary_bullets" :key="i" style="margin-bottom: 4px">{{ b }}</li>
+        <li v-for="(b, i) in db.settings.summary_bullets" :key="i" style="margin-bottom: 4px"><RichText :text="b" /></li>
       </ul>
       <p v-else style="margin: 0">{{ db.settings?.summary }}</p>
       <p style="margin: 12px 0 0" class="small muted">

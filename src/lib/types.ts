@@ -30,6 +30,7 @@ export interface Settings {
   quote_attrib: string;
   cadence: Record<string, number>;
   summary_bullets: string[];
+  core_message?: string; // absent until migration 0005 has run
   updated_at: string;
 }
 

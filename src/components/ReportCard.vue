@@ -39,7 +39,8 @@ const dot = (s: string) => ({ Achieved: 'g-done', 'On track': 'g-ok', 'At risk':
 </script>
 
 <template>
-  <article class="pc" :class="{ fresh: isFresh(p.id) }">
+  <article class="pc" :class="{ fresh: isFresh(p.id) }" :data-id="p.id">
+    <button class="pc-grip noprint" type="button" title="Drag to reorder" aria-label="Drag to reorder">⠿</button>
     <PlayerAvatar :player="p" :size="70" eager />
     <div class="pc-main">
       <header class="pc-h">
